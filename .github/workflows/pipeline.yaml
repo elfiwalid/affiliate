@@ -1,0 +1,23 @@
+# azure-pipelines.yml
+trigger:
+  branches:
+    include:
+      - main  # ou ta branche par défaut
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: '📦 Installer Node.js'
+
+  - script: npm install
+    displayName: '📥 Installer les dépendances'
+
+  - script: npx tailwindcss -i ./css/tailwind.css -o ./css/main.css --watch
+    displayName: '🎨 Compiler Tailwind CSS'
+
+  - script: echo "✅ Build terminé. Tu peux ajouter un déploiement ici."
+    displayName: '🚀 Fin du pipeline'
